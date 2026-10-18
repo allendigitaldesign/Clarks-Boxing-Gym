@@ -1,0 +1,10 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "site",
+      "url": "http://127.0.0.1:8800",
+      "port": 8800
+    }
+  ]
+}
