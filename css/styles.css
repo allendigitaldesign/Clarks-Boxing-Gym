@@ -77,7 +77,7 @@ p { margin: 0 0 1em; }
 .btn-outline:hover { background: var(--white); color: var(--black); border-color: var(--white); }
 .btn-dark { background: var(--black); color: var(--white); }
 .btn-dark:hover { background: var(--charcoal); }
-.btn-sm { font-size: 0.95rem; padding: 0.6em 1.4em; }
+.btn-sm { font-size: 0.95rem; padding: 0.6em 1.4em; white-space: nowrap; }
 
 /* ---------- Header ---------- */
 .site-header {
@@ -99,6 +99,7 @@ p { margin: 0 0 1em; }
 
 .main-nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 28px; }
 .main-nav a {
+  white-space: nowrap;
   font-family: var(--font-head); text-transform: uppercase; font-weight: 500;
   letter-spacing: 0.06em; text-decoration: none; font-size: 1.02rem; padding: 6px 0;
   border-bottom: 2px solid transparent;
@@ -320,13 +321,9 @@ p { margin: 0 0 1em; }
   .gallery { grid-template-columns: repeat(4, 1fr); }
 }
 
-@media (max-width: 860px) {
-  :root { --header-h: 66px; }
-  body { font-size: 17px; padding-bottom: 68px; }
-  .brand img { width: 46px; height: 46px; }
-  .brand-name { font-size: 1.1rem; }
+/* Menu collapses into the toggle button below 1100px so the header never wraps */
+@media (max-width: 1100px) {
   .nav-toggle { display: block; }
-  .header-cta { display: none; }
   .main-nav {
     position: fixed; top: var(--header-h); left: 0; right: 0; bottom: 0;
     background: var(--black); padding: 24px var(--gutter);
@@ -339,6 +336,14 @@ p { margin: 0 0 1em; }
   .main-nav .nav-extra { display: grid; gap: 12px; margin-top: 28px; }
   .main-nav .nav-extra .btn { display: flex; font-size: 1.15rem; padding: 0.85em 1.5em; border: 2px solid transparent; }
   .main-nav .nav-extra .btn-outline { border-color: var(--white); }
+}
+
+@media (max-width: 860px) {
+  :root { --header-h: 66px; }
+  body { font-size: 17px; padding-bottom: 68px; }
+  .brand img { width: 46px; height: 46px; }
+  .brand-name { font-size: 1.1rem; }
+  .header-cta { display: none; }
 
   .card-grid, .split, .offer, .video-grid, .contact-layout { grid-template-columns: 1fr; }
   .split.reverse > :first-child, .offer:nth-child(even) > img { order: 0; }
@@ -355,7 +360,7 @@ p { margin: 0 0 1em; }
   .mobile-bar .btn { padding: 0.7em 1em; font-size: 1rem; }
 }
 
-@media (min-width: 861px) {
+@media (min-width: 1101px) {
   .main-nav .nav-extra { display: none; }
 }
 
