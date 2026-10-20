@@ -194,7 +194,7 @@ p { margin: 0 0 1em; }
 .gallery { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
 .gallery img { width: 100%; aspect-ratio: 1; object-fit: cover; transition: opacity 0.2s; }
 .gallery a:hover img { opacity: 0.85; }
-.gallery-cta { text-align: center; margin-top: 36px; }
+.gallery-cta { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
 
 /* ---------- Videos ---------- */
 .video { position: relative; aspect-ratio: 16 / 9; background: #000; border-radius: var(--radius); overflow: hidden; }
