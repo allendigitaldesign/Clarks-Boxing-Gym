@@ -10,7 +10,7 @@ Plain HTML/CSS/JS with no build step. It can be hosted anywhere that serves stat
 | Coach Clark (story + videos) | `about.html` |
 | Free trial / contact form | `contact.html` |
 
-Styles live in `css/styles.css`, and the menu and form logic live in `js/main.js`. Photos are in `images/`. They come from the old Wix site and the gym's public Facebook page.
+Styles live in `css/styles.css`, the menu and form logic live in `js/main.js`, and visitor analytics live in `js/analytics.js` (PostHog, live domain only). Photos are in `images/`. They come from the old Wix site and the gym's public Facebook page.
 
 ## Preview locally
 

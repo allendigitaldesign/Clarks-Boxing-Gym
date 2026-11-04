@@ -61,6 +61,7 @@
 
     var data = new FormData(form);
     var request = data.get("Request") || "Free trial";
+    var interest = data.get("Interested in") || "";
     data.append("_subject", "Website: " + request + " request from " + (data.get("Name") || "a visitor"));
 
     button.disabled = true;
@@ -75,11 +76,14 @@
       .then(function (res) { return res.json().then(function (json) { return { ok: res.ok, json: json }; }); })
       .then(function (r) {
         if (!r.ok || String(r.json.success) !== "true") throw new Error(r.json.message || "Send failed");
+        if (window.clarksTrack) window.clarksTrack("contact_form_result", { ok: true, request: request, interest: interest });
         form.reset();
         status.textContent = "Thanks! We got your message and will be in touch soon. Want an answer faster? Call (254) 216-1634.";
         status.className = "form-status ok";
       })
-      .catch(function () {
+      .catch(function (err) {
+        // Worked/failed and the two fixed choices only, never what the visitor typed.
+        if (window.clarksTrack) window.clarksTrack("contact_form_result", { ok: false, request: request, interest: interest, error: String(err && err.message).slice(0, 80) });
         status.innerHTML = 'Sorry, that didn\'t go through. Please call <a href="tel:+12542161634">(254) 216-1634</a> or email <a href="mailto:clarksboxinggym@gmail.com">clarksboxinggym@gmail.com</a>.';
         status.className = "form-status err";
       })
