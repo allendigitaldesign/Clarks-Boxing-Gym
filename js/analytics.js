@@ -6,7 +6,7 @@
 
 (function () {
   // The project key is public by design. It can send events but cannot read them.
-  var KEY = "REPLACE_WITH_POSTHOG_PROJECT_KEY";
+  var KEY = "phc_qzJdH5rUSgEbyBsWx5GvE3SPkAKmUkdiC9ueGJVhK4dQ";
   var LIVE_HOSTS = ["clarksboxinggym.com", "www.clarksboxinggym.com"];
 
   // main.js calls this for the form result. It stays a no-op when tracking is off.
