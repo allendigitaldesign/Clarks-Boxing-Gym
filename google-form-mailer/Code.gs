@@ -42,7 +42,7 @@ function doPost(e) {
     if (!client) return reply({ ok: false, error: "unknown_site" });
 
     var subject = clip(form.subject || "New website message", 200).replace(/[\r\n]+/g, " ");
-    var message = messageText(form);
+    var message = messageText(form, fieldOrder(e));
 
     // Save first, so the message is kept even if the email fails.
     saveCopy(client, subject, message);
@@ -69,9 +69,21 @@ function findClient(siteId) {
   return null;
 }
 
+// Field names in the order the form sent them. Google's parameter list loses that order.
+function fieldOrder(e) {
+  var seen = {};
+  return e.postData.contents.split("&")
+    .map(function (pair) { return decodeURIComponent(pair.split("=")[0].replace(/\+/g, " ")); })
+    .filter(function (key) {
+      if (seen[key] || !(key in e.parameter)) return false;
+      seen[key] = true;
+      return true;
+    });
+}
+
 // Every visible form field, one per line. Names starting with _ are for this script.
-function messageText(form) {
-  var lines = Object.keys(form)
+function messageText(form, keys) {
+  var lines = keys
     .filter(function (key) { return key.charAt(0) !== "_" && key !== "subject"; })
     .map(function (key) { return key + ": " + clip(form[key], MAX_FIELD); });
   return clip(lines.join("\n"), MAX_MESSAGE);

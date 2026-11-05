@@ -36,4 +36,4 @@ The form sends to clarksboxinggym@gmail.com through a small free Google script t
 - **Spam:** The hidden `_gotcha` field is the honeypot. The script ignores any submission that fills it in.
 - **Analytics:** `js/main.js` sends a `contact_form_result` event with worked or failed, the two fixed choices, and a fixed error label. It never includes what the visitor typed.
 - **Changing the script:** Code changes only go live after publishing a new version of the existing deployment, which keeps the same web address.
-- **Testing:** Every real submission emails the gym, so check with Joseph before sending one.
+- **Testing:** Every real submission emails the gym, so check with Joseph before sending one. To test without bothering the gym, add a temporary Clients row that points at Joseph's inbox and use its ID, then remove the row and the test message.
