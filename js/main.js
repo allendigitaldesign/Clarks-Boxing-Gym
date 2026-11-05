@@ -62,7 +62,7 @@
     var data = new FormData(form);
     var request = data.get("Request") || "Free trial";
     var interest = data.get("Interested in") || "";
-    data.append("_subject", "Website: " + request + " request from " + (data.get("Name") || "a visitor"));
+    data.append("subject", "Website: " + request + " request from " + (data.get("Name") || "a visitor"));
 
     button.disabled = true;
     button.textContent = "Sending…";
@@ -73,9 +73,9 @@
       headers: { Accept: "application/json" },
       body: data,
     })
-      .then(function (res) { return res.json().then(function (json) { return { ok: res.ok, json: json }; }); })
-      .then(function (r) {
-        if (!r.ok || String(r.json.success) !== "true") throw new Error(r.json.message || "Send failed");
+      .then(function (res) {
+        // Only the status number goes into the error, because this text reaches analytics.
+        if (!res.ok) throw new Error("http_" + res.status);
         if (window.clarksTrack) window.clarksTrack("contact_form_result", { ok: true, request: request, interest: interest });
         form.reset();
         status.textContent = "Thanks! We got your message and will be in touch soon. Want an answer faster? Call (254) 216-1634.";

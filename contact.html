@@ -56,12 +56,10 @@
           <h2>Book Your Free Trial</h2>
           <p style="color: var(--grey);">Fill this out and we'll reach out to schedule your class. Have a question instead? Choose "Ask a question" and send it our way.</p>
 
-          <!-- Submissions go to clarksboxinggym@gmail.com through FormSubmit (formsubmit.co).
-               The first submission sends an activation email to that inbox. Someone must click it
-               before messages start arriving. -->
-          <form class="form ph-no-capture" id="contact-form" action="https://formsubmit.co/ajax/clarksboxinggym@gmail.com" method="POST">
-            <input type="hidden" name="_template" value="table">
-            <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <!-- Submissions go to clarksboxinggym@gmail.com through Formspree (formspree.io).
+               The address is set on the Formspree form, not here. See "Contact form" in README.md. -->
+          <form class="form ph-no-capture" id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
 
             <div class="field">
               <span style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 1rem;">I want to</span>

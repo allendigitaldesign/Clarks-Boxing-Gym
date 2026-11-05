@@ -26,4 +26,11 @@ The header and footer are repeated in every page. If you change the phone number
 
 ## Contact form
 
-The form sends to clarksboxinggym@gmail.com through [FormSubmit](https://formsubmit.co). The **first** time someone submits it, FormSubmit sends an activation email to that inbox. Someone must click the link in it before messages start arriving.
+The form sends to clarksboxinggym@gmail.com through [Formspree](https://formspree.io) on its free plan. The address is set on the Formspree form, not in this site's code. `contact.html` only holds the form's ID, in the `action` address of the `<form>` tag.
+
+- **Free limit:** 50 messages a month. Past that, Formspree keeps new messages in the dashboard's Over Limit folder instead of emailing them, and sends a warning email first.
+- **Backup copy:** Messages stay in the Formspree dashboard for 30 days, so a missed email isn't a lost lead.
+- **If the service is down:** Visitors see the error message with the gym's phone number and email. Check [status.formspree.io](https://status.formspree.io).
+- **Spam:** The hidden `_gotcha` field is the honeypot. Formspree silently ignores any submission that fills it in.
+- **Analytics:** `js/main.js` sends a `contact_form_result` event with worked or failed, the two fixed choices, and a status number. It never includes what the visitor typed.
+- **Testing:** Every real submission emails the gym, so check with Joseph before sending one.
