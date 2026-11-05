@@ -56,9 +56,10 @@
           <h2>Book Your Free Trial</h2>
           <p style="color: var(--grey);">Fill this out and we'll reach out to schedule your class. Have a question instead? Choose "Ask a question" and send it our way.</p>
 
-          <!-- Submissions go to clarksboxinggym@gmail.com through Formspree (formspree.io).
-               The address is set on the Formspree form, not here. See "Contact form" in README.md. -->
-          <form class="form ph-no-capture" id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <!-- Submissions go to clarksboxinggym@gmail.com through the Google form mailer.
+               The address is set in the mailer's Clients tab, not here. See "Contact form" in README.md. -->
+          <form class="form ph-no-capture" id="contact-form" action="https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec" method="POST">
+            <input type="hidden" name="_site" value="clarks-boxing">
             <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
 
             <div class="field">

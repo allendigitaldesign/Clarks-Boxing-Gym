@@ -68,14 +68,14 @@
     button.textContent = "Sending…";
     status.className = "form-status";
 
-    fetch(form.action, {
-      method: "POST",
-      headers: { Accept: "application/json" },
-      body: data,
-    })
+    fetch(form.action, { method: "POST", body: new URLSearchParams(data) })
       .then(function (res) {
-        // Only the status number goes into the error, because this text reaches analytics.
+        // Errors reach analytics, so they only ever use these fixed labels.
         if (!res.ok) throw new Error("http_" + res.status);
+        return res.json().catch(function () { throw new Error("bad_reply"); });
+      })
+      .then(function (result) {
+        if (!result || result.ok !== true) throw new Error("not_sent");
         if (window.clarksTrack) window.clarksTrack("contact_form_result", { ok: true, request: request, interest: interest });
         form.reset();
         status.textContent = "Thanks! We got your message and will be in touch soon. Want an answer faster? Call (254) 216-1634.";
