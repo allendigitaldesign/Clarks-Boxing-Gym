@@ -62,20 +62,20 @@
     var data = new FormData(form);
     var request = data.get("Request") || "Free trial";
     var interest = data.get("Interested in") || "";
-    data.append("_subject", "Website: " + request + " request from " + (data.get("Name") || "a visitor"));
+    data.append("subject", "Website: " + request + " request from " + (data.get("Name") || "a visitor"));
 
     button.disabled = true;
     button.textContent = "Sending…";
     status.className = "form-status";
 
-    fetch(form.action, {
-      method: "POST",
-      headers: { Accept: "application/json" },
-      body: data,
-    })
-      .then(function (res) { return res.json().then(function (json) { return { ok: res.ok, json: json }; }); })
-      .then(function (r) {
-        if (!r.ok || String(r.json.success) !== "true") throw new Error(r.json.message || "Send failed");
+    fetch(form.action, { method: "POST", body: new URLSearchParams(data) })
+      .then(function (res) {
+        // Errors reach analytics, so they only ever use these fixed labels.
+        if (!res.ok) throw new Error("http_" + res.status);
+        return res.json().catch(function () { throw new Error("bad_reply"); });
+      })
+      .then(function (result) {
+        if (!result || result.ok !== true) throw new Error("not_sent");
         if (window.clarksTrack) window.clarksTrack("contact_form_result", { ok: true, request: request, interest: interest });
         form.reset();
         status.textContent = "Thanks! We got your message and will be in touch soon. Want an answer faster? Call (254) 216-1634.";
