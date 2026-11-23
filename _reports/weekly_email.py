@@ -6,13 +6,18 @@ like sample-week.json, then runs:
     python3 _reports/weekly_email.py week.json --html > email.html
     python3 _reports/weekly_email.py week.json --text > email.txt
 
-Every chart is built from plain HTML tables with inline styles, so it shows in
-Gmail, Apple Mail and Outlook without images or scripts.
+The HTML shows the header picture _reports/email-header.jpg (logo plus the
+name in the site's font) as cid:att0, so it must be sent as the first
+attachment, inline. If it can't be attached, build with --html-text-header
+instead, which draws a plain text header.
 
-Two rules come from the Gmail connector that sends this email. It strips the
-`background:` shorthand (so use `background-color:` only) and it removes any
-<img> that isn't an attached file (so the email has no pictures). Breaking
-either rule makes the charts and the red boxes vanish in the inbox.
+Every chart is built from plain HTML tables with inline styles, so it shows in
+Gmail, Apple Mail and Outlook without anyone tapping "show images."
+
+Rules from the Gmail connector that sends this email: it strips the
+`background:` shorthand (so use `background-color:` only), it deletes any
+<img> that points at a web address (only attached pictures survive), and Gmail
+never loads web fonts. Breaking these makes charts, boxes or the logo vanish.
 
 This folder starts with an underscore, so GitHub Pages does not publish it.
 """
@@ -198,26 +203,36 @@ def tile(label, pair, fmt=num, unit=""):
 
 
 # ---------- The email ----------
-def render_html(d):
+def header_image():
+    # The logo and the name drawn in the site's own font, sent as an inline
+    # attachment (email-header.jpg) because the connector deletes linked pictures.
+    return (f'<img src="cid:att0" width="320" alt="Clark\'s Boxing Club, weekly website report" '
+            f'style="display:block;width:320px;max-width:100%;height:auto;border:0">')
+
+
+def header_text():
+    # Used only when the picture can't be attached.
+    return T(f'<tr><td width="60" style="vertical-align:middle"><div style="width:52px;height:52px;border-radius:50%;'
+             f'background-color:{RED};color:#ffffff;font-family:{HEAD};font-size:20px;font-weight:600;'
+             f'line-height:52px;text-align:center;letter-spacing:1px">CB</div></td>'
+             f'<td style="vertical-align:middle;padding-left:12px"><div style="font-family:{HEAD};font-size:20px;'
+             f'letter-spacing:1px;text-transform:uppercase;color:#ffffff;font-weight:600;line-height:1">Clark\'s Boxing Club</div>'
+             f'<div style="font-family:{HEAD};font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#bdbdbd;'
+             f'margin-top:5px">Weekly website report</div></td></tr>')
+
+
+def render_html(d, text_header=False):
     v = d.get("visitors")          # None when the visitor numbers couldn't be reached
 
-    head = (f'<tr><td style="background-color:{BLACK};padding:18px 24px">'
-            + T(f'<tr><td width="60" style="vertical-align:middle"><div style="width:52px;height:52px;border-radius:50%;'
-                f'background-color:{RED};color:#ffffff;font-family:{HEAD};font-size:20px;font-weight:600;'
-                f'line-height:52px;text-align:center;letter-spacing:1px">CB</div></td>'
-                f'<td style="vertical-align:middle;padding-left:12px"><div style="font-family:{HEAD};font-size:20px;'
-                f'letter-spacing:1px;text-transform:uppercase;color:#ffffff;font-weight:600;line-height:1">Clark\'s Boxing Club</div>'
-                f'<div style="font-family:{HEAD};font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#bdbdbd;'
-                f'margin-top:5px">Weekly website report</div></td>'
-                f'<td align="right" style="vertical-align:middle;font-family:{HEAD};font-size:14px;letter-spacing:1px;'
-                f'text-transform:uppercase;color:#ffffff;white-space:nowrap">{e(d["range"])}</td></tr>')
+    head = (f'<tr><td style="background-color:{BLACK};padding:16px 24px">'
+            + (header_text() if text_header else header_image())
             + f'</td></tr><tr><td style="background-color:{RED};height:4px;font-size:0">&nbsp;</td></tr>')
 
     period = note(e(d["period_note"]), 2) if d.get("period_note") else ""
     lines = "".join(
         f'<div style="font-size:16px;line-height:1.5;color:{INK};padding:2px 0 2px 16px;'
         f'border-left:3px solid {RED};margin-bottom:6px">{e(l)}</div>' for l in d["lines"])
-    intro = sect(eyebrow("This week")
+    intro = sect(eyebrow(f'This week · {d["range"]}')
                  + f'<div style="font-family:{HEAD};font-size:32px;line-height:1.05;text-transform:uppercase;'
                    f'font-weight:600;color:{INK};margin:6px 0 12px">{e(d["headline"])}</div>'
                  + lines + period, 30)
@@ -404,8 +419,12 @@ def render_text(d):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3 or sys.argv[2] not in ("--html", "--text"):
-        sys.exit("usage: python3 _reports/weekly_email.py week.json --html|--text")
-    with open(sys.argv[1]) as f:
+    args = sys.argv[1:]
+    if len(args) not in (2, 3) or args[1] not in ("--html", "--html-text-header", "--text"):
+        sys.exit("usage: python3 _reports/weekly_email.py week.json --html|--html-text-header|--text")
+    with open(args[0]) as f:
         data = json.load(f)
-    sys.stdout.write(render_html(data) if sys.argv[2] == "--html" else render_text(data))
+    if args[1] == "--text":
+        sys.stdout.write(render_text(data))
+    else:
+        sys.stdout.write(render_html(data, text_header=args[1] == "--html-text-header"))
