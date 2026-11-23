@@ -26,8 +26,8 @@ PAPER = "#f5f4f2"
 GOOD = "#1d6b35"
 WARN = "#b7791f"
 MUTED = "#c9c9c9"
-HEAD = "'Oswald','Arial Narrow','Helvetica Neue',Arial,sans-serif"
-BODY = "'Barlow','Helvetica Neue',Helvetica,Arial,sans-serif"
+HEAD = "Oswald,'Arial Narrow',Arial,sans-serif"
+BODY = "Barlow,Helvetica,Arial,sans-serif"
 LOGO = "https://clarksboxinggym.com/images/logo-badge.jpg"
 ADDRESS = "601 S. 2nd Street, Killeen, TX 76541 &middot; (254) 216-1634"
 FOOTER = ("Numbers are anonymous and run a little low because some visitors use ad blockers. "
@@ -62,13 +62,13 @@ def pct(v, mx):
 
 
 def T(inner, style=""):
-    return ('<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" '
-            f'style="border-collapse:collapse;{style}">{inner}</table>')
+    st = f' style="{style}"' if style else ""
+    return f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0"{st}>{inner}</table>'
 
 
 # ---------- Chart pieces ----------
 def bar(p, color, h=12):
-    cell = f'height:{h}px;font-size:0;line-height:0'
+    cell = f'height:{h}px;font-size:0'
     if p <= 0:
         return T(f'<tr><td style="background:{LINE};{cell};border-radius:3px">&nbsp;</td></tr>')
     if p >= 100:
@@ -85,7 +85,7 @@ def hbars(rows, color=RED, fmt=num, mx=None, label_w=34):
     out = ""
     for label, v, note in rows:
         sub = f'<div style="font-size:12px;color:{GREY};line-height:1.3">{note}</div>' if note else ""
-        out += (f'<tr><td width="{label_w}%" style="padding:7px 10px 7px 0;font-family:{BODY};font-size:15px;'
+        out += (f'<tr><td width="{label_w}%" style="padding:7px 10px 7px 0;font-size:15px;'
                 f'color:{INK};line-height:1.25;vertical-align:middle">{label}{sub}</td>'
                 f'<td style="padding:7px 0;vertical-align:middle">{bar(pct(v, mx), color)}</td>'
                 f'<td width="64" align="right" style="padding:7px 0 7px 10px;font-family:{HEAD};font-size:16px;'
@@ -101,7 +101,7 @@ def columns(days, h=110):
         ph = max(3, round(h * v / mx)) if v else 0
         top += (f'<td valign="bottom" align="center" width="{w}%" style="padding:0 5px;height:{h + 26}px">'
                 f'<div style="font-family:{HEAD};font-size:15px;font-weight:600;color:{INK};line-height:20px">{v}</div>'
-                f'<div style="height:{ph}px;background:{RED};border-radius:3px 3px 0 0;font-size:0;line-height:0">&nbsp;</div></td>')
+                f'<div style="height:{ph}px;background:{RED};border-radius:3px 3px 0 0;font-size:0">&nbsp;</div></td>')
         bottom += (f'<td align="center" style="padding:6px 0 0;border-top:2px solid {LINE};font-family:{HEAD};'
                    f'font-size:12px;letter-spacing:1px;text-transform:uppercase;color:{GREY}">{e(d)}</td>')
     return T(f"<tr>{top}</tr><tr>{bottom}</tr>")
@@ -129,7 +129,7 @@ def stacked(parts, h=22):
 
 def legend(items):
     cells = "".join(
-        f'<td style="padding:8px 14px 0 0;font-family:{BODY};font-size:14px;color:{GREY};white-space:nowrap">'
+        f'<td style="padding:8px 14px 0 0;font-size:14px;color:{GREY};white-space:nowrap">'
         f'<span style="display:inline-block;width:10px;height:10px;background:{c};border-radius:2px;'
         f'margin-right:6px;vertical-align:middle"></span>{e(label)}</td>' for label, c in items)
     return f'<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>{cells}</tr></table>'
@@ -153,11 +153,11 @@ def h3(t, top=20):
 
 
 def note(t, top=6):
-    return f'<div style="font-family:{BODY};font-size:13px;color:{GREY};margin-top:{top}px;line-height:1.45">{t}</div>'
+    return f'<div style="font-size:13px;color:{GREY};margin-top:{top}px;line-height:1.45">{t}</div>'
 
 
 def para(t):
-    return f'<div style="font-family:{BODY};font-size:15px;color:{INK};line-height:1.5;margin-bottom:6px">{t}</div>'
+    return f'<div style="font-size:15px;color:{INK};line-height:1.5;margin-bottom:6px">{t}</div>'
 
 
 def sect(inner, top=28):
@@ -166,7 +166,7 @@ def sect(inner, top=28):
 
 def rule():
     return (f'<tr><td class="pad" style="padding:24px 32px 0;background:#ffffff">'
-            f'<div style="border-top:1px solid {LINE};font-size:0;line-height:0">&nbsp;</div></td></tr>')
+            f'<div style="border-top:1px solid {LINE};font-size:0">&nbsp;</div></td></tr>')
 
 
 def compare(now, before, fmt, unit):
@@ -190,7 +190,7 @@ def tile(label, pair, fmt=num, unit=""):
             f'<div style="background:{PAPER};border-radius:6px;padding:14px 16px">'
             f'<div style="font-family:{HEAD};font-size:12px;letter-spacing:2px;text-transform:uppercase;color:{GREY}">{e(label)}</div>'
             f'<div style="font-family:{HEAD};font-size:36px;line-height:1.1;font-weight:600;color:{INK}">{fmt(now)}</div>'
-            f'<div style="font-family:{BODY};font-size:13px;color:{GREY}">{compare(now, before, fmt, unit)}</div>'
+            f'<div style="font-size:13px;color:{GREY}">{compare(now, before, fmt, unit)}</div>'
             f'</div></td>')
 
 
@@ -206,12 +206,12 @@ def render_html(d):
                 f'<div style="font-family:{HEAD};font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#bdbdbd;'
                 f'margin-top:5px">Weekly website report</div></td>'
                 f'<td align="right" style="vertical-align:middle;font-family:{HEAD};font-size:14px;letter-spacing:1px;'
-                f'text-transform:uppercase;color:#ffffff">{e(d["range"])}</td></tr>')
-            + f'</td></tr><tr><td style="background:{RED};height:4px;font-size:0;line-height:0">&nbsp;</td></tr>')
+                f'text-transform:uppercase;color:#ffffff;white-space:nowrap">{e(d["range"])}</td></tr>')
+            + f'</td></tr><tr><td style="background:{RED};height:4px;font-size:0">&nbsp;</td></tr>')
 
     period = note(e(d["period_note"]), 2) if d.get("period_note") else ""
     lines = "".join(
-        f'<div style="font-family:{BODY};font-size:16px;line-height:1.5;color:{INK};padding:2px 0 2px 16px;'
+        f'<div style="font-size:16px;line-height:1.5;color:{INK};padding:2px 0 2px 16px;'
         f'border-left:3px solid {RED};margin-bottom:6px">{e(l)}</div>' for l in d["lines"])
     intro = sect(eyebrow("This week")
                  + f'<div style="font-family:{HEAD};font-size:32px;line-height:1.05;text-transform:uppercase;'
@@ -222,7 +222,7 @@ def render_html(d):
           f'<div style="background:{RED};border-radius:6px;padding:18px 20px">'
           f'<div style="font-family:{HEAD};font-size:14px;letter-spacing:3px;text-transform:uppercase;color:#ffffff;'
           f'font-weight:600">Do this week</div>'
-          f'<div style="font-family:{BODY};font-size:16px;line-height:1.5;color:#ffffff;margin-top:6px">{e(d["do_this_week"])}</div>'
+          f'<div style="font-size:16px;line-height:1.5;color:#ffffff;margin-top:6px">{e(d["do_this_week"])}</div>'
           f'</div></td></tr>')
 
     # Website health
@@ -232,12 +232,12 @@ def render_html(d):
     ticks = "".join(
         f'<tr><td width="28" style="padding:5px 0;vertical-align:top"><div style="width:20px;height:20px;border-radius:50%;'
         f'background:{GOOD};color:#ffffff;font-size:12px;line-height:20px;text-align:center;font-family:Arial,sans-serif">'
-        f'&#10003;</div></td><td style="padding:5px 0;font-family:{BODY};font-size:15px;color:{INK}">{e(g)}</td></tr>'
+        f'&#10003;</div></td><td style="padding:5px 0;font-size:15px;color:{INK}">{e(g)}</td></tr>'
         for g in good)
     if attn:
         attn_html = "".join(
             f'<div style="background:#fff8ec;border:1px solid #f1dcb2;border-radius:6px;padding:12px 14px;margin-top:8px;'
-            f'font-family:{BODY};font-size:15px;color:{INK};line-height:1.45"><b style="color:{WARN}">&#9679;</b> '
+            f'font-size:15px;color:{INK};line-height:1.45"><b style="color:{WARN}">&#9679;</b> '
             f'{e(a["problem"])}<br><b>Next step:</b> {e(a["next_step"])}</div>' for a in attn)
     else:
         attn_html = para("Nothing this week.")
@@ -249,7 +249,7 @@ def render_html(d):
     body = head + intro + do
 
     if not v:
-        body += sect(f'<div style="background:{PAPER};border-radius:6px;padding:14px 16px;font-family:{BODY};'
+        body += sect(f'<div style="background:{PAPER};border-radius:6px;padding:14px 16px;'
                      f'font-size:15px;color:{INK}"><b>Visitor numbers are missing this week.</b> '
                      f'They could not be reached when this report ran. The health checks below still ran.</div>', 22)
         body += rule() + health
@@ -321,8 +321,8 @@ def render_html(d):
     body += (f'<tr><td style="height:32px;background:#ffffff;font-size:0">&nbsp;</td></tr>'
              f'<tr><td class="pad" style="background:{BLACK};padding:26px 32px;text-align:center">'
              f'<div style="font-family:{HEAD};font-size:16px;letter-spacing:2px;text-transform:uppercase;color:#ffffff">Clark\'s Boxing Club</div>'
-             f'<div style="font-family:{BODY};font-size:14px;color:#bdbdbd;margin-top:6px">{ADDRESS}</div>'
-             f'<div style="font-family:{BODY};font-size:12px;line-height:1.5;color:#8d8d8d;margin-top:14px">{FOOTER}{extra}</div></td></tr>')
+             f'<div style="font-size:14px;color:#bdbdbd;margin-top:6px">{ADDRESS}</div>'
+             f'<div style="font-size:12px;line-height:1.5;color:#8d8d8d;margin-top:14px">{FOOTER}{extra}</div></td></tr>')
 
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
@@ -334,7 +334,7 @@ def render_html(d):
 </head>
 <body style="margin:0;padding:0;background:{PAPER}">
 <div style="display:none;max-height:0;overflow:hidden;opacity:0">{e(d.get("preview_text", ""))}</div>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:{PAPER}"><tr><td align="center">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:{PAPER}"><tr><td align="center" style="font-family:{BODY}">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:620px;border-collapse:collapse">
 {body}
 </table></td></tr></table></body></html>"""
