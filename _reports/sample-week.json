@@ -1,0 +1,100 @@
+{
+  "range": "Nov 9 to Nov 15",
+  "period_note": "",
+  "preview_text": "26 people visited, 5 free-trial clicks, 4 form sends. One thing to do this week.",
+  "headline": "26 people visited the site",
+  "lines": [
+    "26 people visited the site, 2 more than last week.",
+    "5 free-trial clicks, 1 call tap and 4 contact form sends. All sends went through.",
+    "Numbers are still too small to call anything a trend."
+  ],
+  "do_this_week": "Make sure the Choose Your Plan area on the Pricing page ends with a clear Book a Free Trial button. People read that section longer than almost anything else (about 46 seconds each), but only 1 person clicked a plan button.",
+  "health": {
+    "working": [
+      "All 5 pages open and load fast.",
+      "All links and photos work.",
+      "Phone, address and hours are correct on every page.",
+      "The contact form is working.",
+      "The latest website update published."
+    ],
+    "attention": [
+      {
+        "problem": "6 photos are larger than they need to be. This can slow the site on phones.",
+        "next_step": "Joseph, shrink the 6 largest photos."
+      }
+    ],
+    "not_checked": "The Facebook, Instagram and map links, plus Google's speed score."
+  },
+  "visitors": {
+    "people": {"this": 26, "last": 24},
+    "visits": {"this": 34, "last": 30},
+    "page_views": {"this": 64, "last": 46},
+    "typical_visit_sec": {"this": 56, "last": 14},
+    "visitors_note": "Last week only covers Nov 4 to Nov 8, since tracking started Nov 4. 25 people were new and 1 came back.",
+    "days": [
+      {"day": "Mon", "visits": 5},
+      {"day": "Tue", "visits": 2},
+      {"day": "Wed", "visits": 5},
+      {"day": "Thu", "visits": 5},
+      {"day": "Fri", "visits": 3},
+      {"day": "Sat", "visits": 7},
+      {"day": "Sun", "visits": 7}
+    ],
+    "days_note": "Saturday and Sunday were the busiest days, with 7 visits each.",
+    "speed": {"phone_sec": 0.4, "computer_sec": 0.7},
+    "clicks": [
+      {"label": "Free-trial clicks", "count": 5, "where": "Home page top and body, Pricing page Basic Monthly plan"},
+      {"label": "Contact form sends", "count": 4, "where": "All went through"},
+      {"label": "Call taps", "count": 1, "where": "Top of the home page"},
+      {"label": "Facebook and Instagram", "count": 0, "where": "Last week: 3"}
+    ],
+    "sections": [
+      {"name": "Your Free Trial Class", "page": "Home", "seconds": 475},
+      {"name": "Choose Your Plan", "page": "Pricing", "seconds": 457},
+      {"name": "Book Your Free Trial", "page": "Contact", "seconds": 364},
+      {"name": "Train Like a Fighter", "page": "Home", "seconds": 243},
+      {"name": "Fight Night & Spar Day", "page": "About", "seconds": 208}
+    ],
+    "pages": [
+      {"page": "Home", "views": 30},
+      {"page": "Training", "views": 12},
+      {"page": "Pricing", "views": 9},
+      {"page": "Contact", "views": 8},
+      {"page": "About", "views": 5}
+    ],
+    "scroll": [
+      {"page": "Pricing", "percent": 76},
+      {"page": "About", "percent": 68},
+      {"page": "Contact", "percent": 58},
+      {"page": "Training", "percent": 42},
+      {"page": "Home", "percent": 31}
+    ],
+    "exits": [
+      {"page": "Home", "visits": 15},
+      {"page": "Training", "visits": 7},
+      {"page": "Contact", "visits": 5},
+      {"page": "Pricing", "visits": 3},
+      {"page": "About", "visits": 1}
+    ],
+    "devices": {"phones": 18, "computers": 8, "tablets": 0},
+    "location": {
+      "killeen_area": 9,
+      "total": 26,
+      "top_cities": [
+        {"city": "Killeen", "people": 5},
+        {"city": "San Antonio", "people": 4},
+        {"city": "Dallas", "people": 4},
+        {"city": "Harker Heights", "people": 2},
+        {"city": "Temple", "people": 2}
+      ]
+    },
+    "sources": [
+      {"source": "Typed the address", "people": 12},
+      {"source": "Google", "people": 10},
+      {"source": "Links inside the site", "people": 5},
+      {"source": "Facebook", "people": 2},
+      {"source": "Linktree", "people": 2}
+    ]
+  },
+  "footer_note": "Test visits from setup were left out."
+}
